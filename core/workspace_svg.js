@@ -1046,7 +1046,7 @@ Blockly.WorkspaceSvg.pathBetween = function(block1, block2, translate=0){
       d = d + " H" + pd[2] + Blockly.WorkspaceSvg.pathBetween(substack1, null, newTranslate1)
         + " H" + pd[5] + Blockly.WorkspaceSvg.pathBetween(substack2, null, newTranslate2)
         + " H" + pd[7];
-    } else if (block.type.includes("event_when")){
+    } else if (block.type.includes("event_when")||block.type==='procedures_definition'){
       d = d ;
     } else {
       d = d + " H" + pd[2];
