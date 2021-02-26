@@ -1071,7 +1071,7 @@ Blockly.WorkspaceSvg.getBoundingPath = function(block1, block2=null){
     var newTranslate = parseInt(substack.getSvgRoot().getAttribute("transform").replace("translate(","").split(",")[0]);
     d = d + " H" + pd2[2] + Blockly.WorkspaceSvg.pathBetween(substack, null, newTranslate)
       + " H" + pd2[5];
-    d = d + " H" + pd2[6] + " H" + pd2[7];
+    d = d + " H" + pd2[6];
   } else if(block2Type == "if_else"){
     var substack1 = block2.inputList[2].connection.targetConnection.getSourceBlock();
     var substack2 = block2.inputList[4].connection.targetConnection.getSourceBlock();
@@ -1123,7 +1123,7 @@ Blockly.WorkspaceSvg.prototype.getBoundingPath = function(blockMarker){
   var endBlock = blockMarker.endBlock;
   if (!endBlock) {
     if(startBlock.getFirstStatementConnection()){
-      var excludeChildren = blocks.length === 1;
+      var excludeChildren = false;//blocks.length === 1;
       return Blockly.WorkspaceSvg.getBoundingPathForControlBlock(startBlock, excludeChildren);
     }else{
       return Blockly.WorkspaceSvg.getBoundingPath(startBlock, null);
@@ -1146,7 +1146,7 @@ Blockly.WorkspaceSvg.prototype.highlightCode = function (marker, isHighlighting)
     if (!block) {
       throw "Tried to highlight start block that does not exist.";
     }
-    if(marker.endId){
+    if(marker.endId && marker.endId!==marker.startId){
       endBlock = this.getBlockById(marker.endId);
       if(!endBlock){
         throw "Tried to highlight end block that does not exist.";
