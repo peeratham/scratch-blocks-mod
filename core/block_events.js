@@ -417,6 +417,17 @@ Blockly.Events.Move.prototype.toJson = function() {
     json['newCoordinate'] = Math.round(this.newCoordinate.x) + ',' +
         Math.round(this.newCoordinate.y);
   }
+  if (this.oldInputName) {
+    json['oldInputName'] = this.oldInputName;
+  }
+  if (this.oldParentId) {
+    json['oldParentId'] = this.oldParentId;
+  }
+  if (this.oldCoordinate) {
+    json['oldCoordinate'] = Math.round(this.oldCoordinate.x) + ',' +
+        Math.round(this.oldCoordinate.y);
+  }
+
   return json;
 };
 
@@ -432,6 +443,16 @@ Blockly.Events.Move.prototype.fromJson = function(json) {
     var xy = json['newCoordinate'].split(',');
     this.newCoordinate =
         new goog.math.Coordinate(parseFloat(xy[0]), parseFloat(xy[1]));
+  }
+  // if (json['oldInputName']) {
+  this.oldInputName = json['oldInputName'];
+  // }
+  // if (json['oldParentId']) {
+  this.oldParentId = json['oldParentId'];
+  if (json['oldCoordinate']) {
+    var xyOld = json['oldCoordinate'].split(',');
+    this.oldCoordinate =
+        new goog.math.Coordinate(parseFloat(xyOld[0]), parseFloat(xyOld[1]));
   }
 };
 
