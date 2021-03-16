@@ -234,13 +234,14 @@ Blockly.BlockSvg.prototype.setGlowBlock = function(isGlowingBlock) {
  Blockly.BlockSvg.prototype.setFadeBlock = function(isFadingBlock) {
   this.isFadingBlock_ = isFadingBlock;
   if(isFadingBlock){
-    this.setStrokeOpacity(0.3);
-    this.setTextOpacity(0.3);
-    this.setOpacity(0.3);
+    this.setStrokeOpacity(this.isShadow()?0.2:0.4);
+    this.setTextOpacity(0.4);
+    this.setFieldOpacity(0.2);
+    this.setOpacity(this.isShadow()?0.2:0.4); //must be called last
   }else{
     this.setStrokeOpacity(1);
     this.setTextOpacity(1);
-    this.setOpacity(1);
+    this.setOpacity(1); //must be called last
   }
 };
 
@@ -259,6 +260,16 @@ Blockly.BlockSvg.prototype.setTextOpacity = function(opacity) {
 Blockly.BlockSvg.prototype.getTextOpacity = function() {
   return this.textOpacity_;
 };
+
+Blockly.BlockSvg.prototype.setFieldOpacity = function(opacity) {
+  this.fieldOpacity_ = opacity;
+};
+
+Blockly.BlockSvg.prototype.getFieldOpacity = function() {
+  return this.fieldOpacity_;
+};
+
+
 
 /**
  * Glow the stack starting with this block, to highlight it visually as if it's running.

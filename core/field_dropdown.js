@@ -481,3 +481,20 @@ Blockly.FieldDropdown.prototype.dispose = function() {
 };
 
 Blockly.Field.register('field_dropdown', Blockly.FieldDropdown);
+
+Blockly.FieldDropdown.prototype.setOpacity = function(opacity){
+  if(!this.box_){ //not all field dropdown use box
+    return;
+  }
+  this.box_.setAttribute('fill-opacity', opacity);
+  this.box_.setAttribute('stroke-opacity',opacity);
+}
+
+Blockly.FieldDropdown.prototype.setTextOpacity = function(opacity){
+  if(this.textElement_){
+    this.textElement_.setAttribute('opacity',opacity);
+  }
+  if(this.arrow_){
+    this.arrow_.setAttribute('opacity',opacity);
+  }
+}

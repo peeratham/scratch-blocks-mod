@@ -812,3 +812,8 @@ Blockly.Field.prototype.setOpacity = function(opacity){
   }
   this.textElement_.setAttribute('fill-opacity',opacity);
 }
+
+Blockly.Field.prototype.setTextOpacity = function(opacity){
+  
+}
+
