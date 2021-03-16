@@ -999,13 +999,14 @@ Blockly.WorkspaceSvg.prototype.collectBlocks = function (
       continue;
     } else {
       var childBlock = input.connection.targetBlock();
-      if(childBlock){
-        blocks = blocks.concat(this.collectBlocks(childBlock,childBlock,[]));
-      }
+        while(childBlock){
+          blocks = blocks.concat(this.collectBlocks(childBlock,null,[]));
+          childBlock = childBlock.getNextBlock();
+        }
     }
   }
 
-  if (startBlock === endBlock ) {
+  if(endBlock===null){
     return blocks;
   }
   
@@ -1013,7 +1014,8 @@ Blockly.WorkspaceSvg.prototype.collectBlocks = function (
   if(nextBlock===null){
     return blocks;
   }
-  return this.collectBlocks(startBlock.getNextBlock(), endBlock, blocks);
+
+  return this.collectBlocks(nextBlock, endBlock, blocks);
 };
 
 /**
