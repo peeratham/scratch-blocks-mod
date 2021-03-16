@@ -542,6 +542,7 @@ Blockly.BlockSvg.prototype.updateColour = function() {
   for (var i = 0, input; input = this.inputList[i]; i++) {
     if (input.outlinePath) {
       input.outlinePath.setAttribute('fill', this.getColourTertiary());
+      input.outlinePath.setAttribute('opacity', this.getOpacity());
     }
   }
 
