@@ -805,3 +805,10 @@ Blockly.Field.prototype.getAbsoluteXY_ = function() {
 Blockly.Field.prototype.referencesVariables = function() {
   return false;
 };
+
+Blockly.Field.prototype.setOpacity = function(opacity){
+  if(!this.textElement_){
+    return;
+  }
+  this.textElement_.setAttribute('fill-opacity',opacity);
+}

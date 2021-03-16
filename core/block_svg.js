@@ -228,6 +228,39 @@ Blockly.BlockSvg.prototype.setGlowBlock = function(isGlowingBlock) {
 };
 
 /**
+ * Glow only this particular block, to highlight it visually as if it's running.
+ * @param {boolean} isGlowingBlock Whether the block should glow.
+ */
+ Blockly.BlockSvg.prototype.setFadeBlock = function(isFadingBlock) {
+  this.isFadingBlock_ = isFadingBlock;
+  if(isFadingBlock){
+    this.setStrokeOpacity(0.3);
+    this.setTextOpacity(0.3);
+    this.setOpacity(0.3);
+  }else{
+    this.setStrokeOpacity(1);
+    this.setTextOpacity(1);
+    this.setOpacity(1);
+  }
+};
+
+Blockly.BlockSvg.prototype.setStrokeOpacity = function(opacity) {
+  this.strokeOpacity_ = opacity;
+};
+
+Blockly.BlockSvg.prototype.getStrokeOpacity = function() {
+  return this.strokeOpacity_;
+};
+
+Blockly.BlockSvg.prototype.setTextOpacity = function(opacity) {
+  this.textOpacity_ = opacity;
+};
+
+Blockly.BlockSvg.prototype.getTextOpacity = function() {
+  return this.textOpacity_;
+};
+
+/**
  * Glow the stack starting with this block, to highlight it visually as if it's running.
  * @param {boolean} isGlowingStack Whether the stack starting with this block should glow.
  */

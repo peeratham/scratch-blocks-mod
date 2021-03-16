@@ -955,6 +955,68 @@ Blockly.WorkspaceSvg.prototype.glowBlock = function(id, isGlowingBlock) {
 };
 
 /**
+ * Glow/unglow a block in the workspace.
+ * @param {?string} id ID of block to find.
+ * @param {boolean} isFadingBlock Whether to fade the block.
+ */
+ Blockly.WorkspaceSvg.prototype.fadeBlock = function(id, isFadingBlock) {
+  var block = null;
+  if (id) {
+    block = this.getBlockById(id);
+    if (!block) {
+      throw 'Tried to glow block that does not exist.';
+    }
+  }
+  block.setFadeBlock(isFadingBlock);
+};
+
+Blockly.WorkspaceSvg.prototype.highlightSegment = function(startId,endId, isHighlighting){
+  var allBlocks = this.getAllBlocks();
+  var segment = this.getSegment(startId,endId);
+  // var justBlocks = allBlocks.filter(e=>!e.isShadow());
+  var outsideBlocks = allBlocks.filter(b=>!segment.includes(b));
+  outsideBlocks.forEach(b=>{
+      this.fadeBlock(b.id, isHighlighting);
+    });
+}
+
+Blockly.WorkspaceSvg.prototype.getSegment = function(startId, endId){
+  var startBlock = this.getBlockById(startId);
+  var endBlock = this.getBlockById(endId);
+  return this.collectBlocks(startBlock,endBlock,[])
+ 
+}
+
+Blockly.WorkspaceSvg.prototype.collectBlocks = function (
+  startBlock,
+  endBlock,
+  blocks
+) {
+  blocks.push(startBlock);
+
+  for (var i = 0, input; input = startBlock.inputList[i]; i++) {
+    if (input.type == Blockly.DUMMY_INPUT) {
+      continue;
+    } else {
+      var childBlock = input.connection.targetBlock();
+      if(childBlock){
+        blocks = blocks.concat(this.collectBlocks(childBlock,childBlock,[]));
+      }
+    }
+  }
+
+  if (startBlock === endBlock ) {
+    return blocks;
+  }
+  
+  var nextBlock = startBlock.getNextBlock();
+  if(nextBlock===null){
+    return blocks;
+  }
+  return this.collectBlocks(startBlock.getNextBlock(), endBlock, blocks);
+};
+
+/**
  * Glow/unglow a stack in the workspace.
  * @param {?string} id ID of block which starts the stack.
  * @param {boolean} isGlowingStack Whether to glow the stack.
@@ -994,9 +1056,14 @@ Blockly.WorkspaceSvg.pathBetweenForControlBlock = function(block1, translate=0, 
       pd[5] = pd[5].replace(pd[5].split(" ")[1],parseInt(pd[5].split(" ")[1]) + translate )
       pd[7] = pd[7].replace(pd[7].split(" ")[1],parseInt(pd[7].split(" ")[1]) + translate )
       var substack1 = block.inputList[2].connection.targetConnection.getSourceBlock();
-      var substack2 = block.inputList[4].connection.targetConnection.getSourceBlock();
+      var substack2;
+      var newTranslate2 ;
+      if(block.inputList[4].connection.targetConnection){
+        substack2 = block.inputList[4].connection.targetConnection.getSourceBlock();
+        newTranslate2 = parseInt(substack2.getSvgRoot().getAttribute("transform").replace("translate(","").split(",")[0]) + translate;
+      }
       var newTranslate1 = parseInt(substack1.getSvgRoot().getAttribute("transform").replace("translate(","").split(",")[0]) + translate;
-      var newTranslate2 = parseInt(substack2.getSvgRoot().getAttribute("transform").replace("translate(","").split(",")[0]) + translate;
+      
       d = d + " H" + pd[2] + Blockly.WorkspaceSvg.pathBetweenForControlBlock(substack1, newTranslate1, false)
         + " H" + pd[5] + Blockly.WorkspaceSvg.pathBetweenForControlBlock(substack2,  newTranslate2, false)
         + " H" + pd[7];

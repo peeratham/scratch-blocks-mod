@@ -191,3 +191,11 @@ Blockly.FieldImage.prototype.updateWidth = function() {
 };
 
 Blockly.Field.register('field_image', Blockly.FieldImage);
+
+
+Blockly.FieldImage.prototype.setOpacity = function(opacity){
+  if(!this.imageElement_){
+    return;
+  }
+  this.imageElement_.setAttribute('opacity',opacity);
+}
