@@ -970,15 +970,20 @@ Blockly.WorkspaceSvg.prototype.glowBlock = function(id, isGlowingBlock) {
   block.setFadeBlock(isFadingBlock);
 };
 
-Blockly.WorkspaceSvg.prototype.highlightSegment = function(startId,endId, isHighlighting){
+Blockly.WorkspaceSvg.prototype.highlightSegment = function (
+  startId,
+  endId,
+  isHighlighting
+) {
   var allBlocks = this.getAllBlocks();
-  var segment = this.getSegment(startId,endId);
-  // var justBlocks = allBlocks.filter(e=>!e.isShadow());
-  var outsideBlocks = allBlocks.filter(b=>!segment.includes(b));
-  outsideBlocks.forEach(b=>{
-      this.fadeBlock(b.id, isHighlighting);
-    });
-}
+  var segment = this.getSegment(startId, endId);
+  var outsideBlocks = allBlocks.filter((b) => !segment.includes(b));
+  outsideBlocks.forEach((b) => {
+    this.fadeBlock(b.id, isHighlighting);
+  });
+};
+
+
 
 Blockly.WorkspaceSvg.prototype.getSegment = function(startId, endId){
   var startBlock = this.getBlockById(startId);

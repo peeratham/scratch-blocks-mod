@@ -128,6 +128,28 @@
       // workspace.highlightCode({ startId: 'cxisMmyKjp!UwPDOE=!A', endId: 'cxisMmyKjp!UwPDOE=!A' }, true);
       // var segment = workspace.getSegment('cxisMmyKjp!UwPDOE=!A', '5:][Te`C9M43ynO_tf};');
       workspace.highlightSegment('cxisMmyKjp!UwPDOE=!A',null, true);
+      setupPracticeSegment('cxisMmyKjp!UwPDOE=!A', null);
+    }
+
+    function setupPracticeSegment(startId, endId) {
+      var allBlocks = workspace.getAllBlocks();
+      var segment = workspace.getSegment(startId, endId);
+      allBlocks.forEach((b) => {
+        b.setDeletable(false);
+      });
+      var outsideBlocks = allBlocks.filter((b) => !segment.includes(b));
+      outsideBlocks.forEach((b) => {
+        b.setMovable(false);
+        b.setEditable(false);
+      });
+    }
+
+    function clearPracticeSegment(){
+      workspace.getAllBlocks().forEach(b=>{
+        b.setDeletable(true);
+        b.setMovable(true);
+        b.setEditable(true);
+      })
     }
 
     function getToolboxElement() {
