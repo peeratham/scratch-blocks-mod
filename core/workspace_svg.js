@@ -1023,6 +1023,61 @@ Blockly.WorkspaceSvg.prototype.collectBlocks = function (
   return this.collectBlocks(nextBlock, endBlock, blocks);
 };
 
+Blockly.WorkspaceSvg.prototype.serializeDFSElements = function (startId, endId) {
+  var endIdReached = false;
+  var stack = [];
+  var discovered = new Set();
+  var start = this.getBlockById(startId);
+  stack.push(start);
+  while (stack.length > 0) {
+    var curr = stack.pop();
+    if (!discovered.has(curr)) {
+      discovered.add(curr);
+      //for all edges
+      if(curr instanceof Blockly.Field){
+        continue;
+      }
+
+      for (var i = 0, input; (input = curr.inputList[i]); i++) {
+        for (var j = 0, field; field = input.fieldRow[j]; j++) {
+          if (
+            field instanceof Blockly.FieldDropdown&& !field.sourceBlock_.isShadow()) {
+              stack.push(field);
+          }
+        }
+        if (input.connection) {
+          var child = input.connection.targetBlock();
+          if (child) {
+            stack.push(child);
+          } 
+        }
+      }
+      var nextBlock = curr.getNextBlock();
+      if (nextBlock !== null && !endIdReached ) {
+        stack.push(nextBlock);
+        if(nextBlock.id===endId){
+          endIdReached = true;
+        }
+      }
+     
+    }
+  }
+  return discovered;
+};
+
+Blockly.WorkspaceSvg.prototype.serializeDFS = function(startId,endId){
+  var result = this.serializeDFSElements(startId,endId);
+  return Array.from(result).map(e => {
+    if (e instanceof Blockly.Field) {
+      return e.getText();
+    } else if (e.isShadow()) {
+      return e.getInput("").fieldRow[0].getValue();
+    } else {
+      return e.type;
+    }
+  });
+}
+
 /**
  * Glow/unglow a stack in the workspace.
  * @param {?string} id ID of block which starts the stack.
