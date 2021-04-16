@@ -1028,11 +1028,8 @@ Blockly.WorkspaceSvg.prototype.serializeDFSElements = function (startId, endId) 
         }
       }
       var nextBlock = curr.getNextBlock();
-      if (nextBlock !== null && !endIdReached ) {
+      if (nextBlock !== null && curr.id!==endId ) {
         stack.push(nextBlock);
-        if(nextBlock.id===endId){
-          endIdReached = true;
-        }
       }
      
     }
