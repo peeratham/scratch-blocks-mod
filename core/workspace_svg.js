@@ -983,45 +983,20 @@ Blockly.WorkspaceSvg.prototype.highlightSegment = function (
   });
 };
 
-
+Blockly.WorkspaceSvg.prototype.clearHighlight = function () {
+  var allBlocks = this.getAllBlocks();
+  allBlocks.forEach((b) => {
+    this.fadeBlock(b.id, false);
+  });
+};
 
 Blockly.WorkspaceSvg.prototype.getSegment = function(startId, endId){
-  var startBlock = this.getBlockById(startId);
-  var endBlock = this.getBlockById(endId);
-  return this.collectBlocks(startBlock,endBlock,[])
- 
+  var elements = this.serializeDFSElements(startId,endId);
+  var blocks =  Array.from(elements).filter(e => {
+      return true;
+  });
+  return blocks;
 }
-
-Blockly.WorkspaceSvg.prototype.collectBlocks = function (
-  startBlock,
-  endBlock,
-  blocks
-) {
-  blocks.push(startBlock);
-
-  for (var i = 0, input; input = startBlock.inputList[i]; i++) {
-    if (input.type == Blockly.DUMMY_INPUT) {
-      continue;
-    } else {
-      var childBlock = input.connection.targetBlock();
-        while(childBlock){
-          blocks = blocks.concat(this.collectBlocks(childBlock,null,[]));
-          childBlock = childBlock.getNextBlock();
-        }
-    }
-  }
-
-  if(endBlock===null){
-    return blocks;
-  }
-  
-  var nextBlock = startBlock.getNextBlock();
-  if(nextBlock===null){
-    return blocks;
-  }
-
-  return this.collectBlocks(nextBlock, endBlock, blocks);
-};
 
 Blockly.WorkspaceSvg.prototype.serializeDFSElements = function (startId, endId) {
   var endIdReached = false;

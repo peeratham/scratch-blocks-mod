@@ -127,25 +127,30 @@
       // workspace.highlightCode({ startId: '5@AKw[^?bljG3ShT[#y2', endId: '5@AKw[^?bljG3ShT[#y2' }, true);
       // workspace.highlightCode({ startId: 'cxisMmyKjp!UwPDOE=!A', endId: 'cxisMmyKjp!UwPDOE=!A' }, true);
       // var segment = workspace.getSegment('cxisMmyKjp!UwPDOE=!A', '5:][Te`C9M43ynO_tf};');
-      // workspace.highlightSegment('cxisMmyKjp!UwPDOE=!A', null, true);
-      // setupPracticeSegment('cxisMmyKjp!UwPDOE=!A', null);
-      const serializeTest = '<xml xmlns="http://www.w3.org/1999/xhtml"><variables></variables><block type="control_if" id="mcr+qHa=F%6`w2R6Vxcq" x="194" y="111"><value name="CONDITION"><block type="sensing_coloristouchingcolor" id="2`8(aXnvmG^ZV{p/{vtV"><value name="COLOR"><shadow type="colour_picker" id="K`,!*Y|,Q`jjt+Zi+c4S"><field name="COLOUR">#b351ec</field></shadow></value><value name="COLOR2"><shadow type="colour_picker" id="kwlk-ag?CgF!53NDs7d="><field name="COLOUR">#1a9908</field></shadow></value></block></value><statement name="SUBSTACK"><block type="motion_gotoxy" id="-jqW{Pa(7Oh.3Y(Df^MN"><value name="X"><shadow type="math_number" id="}oQnV/WF+h;w%JWHB$ta"><field name="NUM">0</field></shadow><block type="sensing_of" id="9jMLBNe[~AGwuBF/k;LB"><field name="PROPERTY">x position</field><value name="OBJECT"><shadow type="sensing_of_object_menu" id="bok/aQXa{sNwRI0F#{;j"><field name="OBJECT">Sprite1</field></shadow></value></block></value><value name="Y"><shadow type="math_number" id="={o1e)K;fFmqA^7n5$S8"><field name="NUM">0</field></shadow></value><next><block type="looks_changeeffectby" id="y`a{GqUSC($9}#M;l^g^"><field name="EFFECT">COLOR</field><value name="CHANGE"><shadow type="math_number" id="_wP*k3G(E9]Yy3xUD)ku"><field name="NUM">10</field></shadow></value><next><block type="motion_glideto" id="v=RBccv]?B8f]|y}iO2W"><value name="SECS"><shadow type="math_number" id="DzXXH37jePRpJ4;yU4Cn"><field name="NUM">1</field></shadow></value><value name="TO"><shadow type="motion_glideto_menu" id="o-fb#zR,vs6|NMR4f^i@"><field name="TO">_random_</field></shadow></value></block></next></block></next></block></statement></block></xml>';
-      const serializeTest2 = '<xml xmlns="http://www.w3.org/1999/xhtml"><variables></variables><block type="looks_changeeffectby" id="y`a{GqUSC($9}#M;l^g^" x="213" y="314"><field name="EFFECT">COLOR</field><value name="CHANGE"><shadow type="math_number" id="_wP*k3G(E9]Yy3xUD)ku"><field name="NUM">10</field></shadow></value></block></xml>';
-      Blockly.Xml.clearWorkspaceAndLoadFromXml(Blockly.Xml.textToDom(serializeTest), workspace);
-      var result1 = workspace.serializeDFS(
-        'mcr+qHa=F%6`w2R6Vxcq',
-        'mcr+qHa=F%6`w2R6Vxcq'
-      );
 
-      console.log(result1);
+      // const bug3 = '<xml xmlns="http://www.w3.org/1999/xhtml"><variables><variable type="" id="`jEk@4|i[#Fk?(8x)AV.-my variable" islocal="false" iscloud="false">my variable</variable><variable type="broadcast_msg" id="4YR]f!EmWjM+Fkdht#%B" islocal="false" iscloud="false">message1</variable></variables><block type="event_whenbroadcastreceived" id="o2|Wt2(wQ:YWyGvODM]," deletable="false" movable="false" editable="false" x="147" y="573"><field name="BROADCAST_OPTION" id="4YR]f!EmWjM+Fkdht#%B" variabletype="broadcast_msg">message1</field><next><block type="looks_show" id="/{@+5,|wf=D)-s~P7WcK" deletable="false" movable="false" editable="false"><next><block type="motion_gotoxy" id="m5VT%#5ME`g`h8h6N}D_" deletable="false" movable="false" editable="false"><value name="X"><shadow type="math_number" id="A^/dR(A{20AY#IGOPcg," editable="false"><field name="NUM">-141</field></shadow></value><value name="Y"><shadow type="math_number" id="^|axB6Rx6#Z|X#]w1EQI" editable="false"><field name="NUM">118</field></shadow></value><next><block type="control_forever" id="Kt+Eor/{V5J!4Y#0o@ah" deletable="false"><statement name="SUBSTACK"><block type="control_if" id="A67bVSR?=46FkQiO#!q1" deletable="false"><value name="CONDITION"><block type="sensing_touchingobject" id="Wt^`U()en0wYJKLYN{EH" deletable="false"><value name="TOUCHINGOBJECTMENU"><shadow type="sensing_touchingobjectmenu" id="tsjSbI9U`cYw+bH^cuHj"><field name="TOUCHINGOBJECTMENU">Sprite1</field></shadow></value></block></value><statement name="SUBSTACK"><block type="looks_hide" id="NoZ?}5*Z8qQxHj1HK0{R" deletable="false"></block></statement></block></statement></block></next></block></next></block></next></block></xml>';
+      const bug4 = '<xml xmlns="http://www.w3.org/1999/xhtml"><variables></variables><block type="control_forever" id="lEPi5x8`T86MS=sMNy-c" x="156" y="127"><statement name="SUBSTACK"><block type="control_repeat" id="=kMCv##@gEUX?p`Ysbo7"><value name="TIMES"><shadow type="math_whole_number" id="QKe^BWHoU8!@usQt]HUo"><field name="NUM">10</field></shadow></value><statement name="SUBSTACK"><block type="motion_movesteps" id="5w#^${VWG?cjGlsTJSh;"><value name="STEPS"><shadow type="math_number" id="8G`76g9C%6|kK6r%UK28"><field name="NUM">10</field></shadow></value></block></statement><next><block type="control_if_else" id="w8!vhrtL:el*B}[~OL!P"><next><block type="control_repeat_until" id="Te]$oBtq?n!,1ag;VYIx"><statement name="SUBSTACK"><block type="motion_turnright" id="qMfrf!U`mrz[5V3KWXqD"><value name="DEGREES"><shadow type="math_number" id="UjQ9sN.:W4#[%^pS^WOB"><field name="NUM">15</field></shadow></value></block></statement></block></next></block></next></block></statement></block></xml>';
+      // const serializeTest = '<xml xmlns="http://www.w3.org/1999/xhtml"><variables></variables><block type="control_if" id="mcr+qHa=F%6`w2R6Vxcq" x="194" y="111"><value name="CONDITION"><block type="sensing_coloristouchingcolor" id="2`8(aXnvmG^ZV{p/{vtV"><value name="COLOR"><shadow type="colour_picker" id="K`,!*Y|,Q`jjt+Zi+c4S"><field name="COLOUR">#b351ec</field></shadow></value><value name="COLOR2"><shadow type="colour_picker" id="kwlk-ag?CgF!53NDs7d="><field name="COLOUR">#1a9908</field></shadow></value></block></value><statement name="SUBSTACK"><block type="motion_gotoxy" id="-jqW{Pa(7Oh.3Y(Df^MN"><value name="X"><shadow type="math_number" id="}oQnV/WF+h;w%JWHB$ta"><field name="NUM">0</field></shadow><block type="sensing_of" id="9jMLBNe[~AGwuBF/k;LB"><field name="PROPERTY">x position</field><value name="OBJECT"><shadow type="sensing_of_object_menu" id="bok/aQXa{sNwRI0F#{;j"><field name="OBJECT">Sprite1</field></shadow></value></block></value><value name="Y"><shadow type="math_number" id="={o1e)K;fFmqA^7n5$S8"><field name="NUM">0</field></shadow></value><next><block type="looks_changeeffectby" id="y`a{GqUSC($9}#M;l^g^"><field name="EFFECT">COLOR</field><value name="CHANGE"><shadow type="math_number" id="_wP*k3G(E9]Yy3xUD)ku"><field name="NUM">10</field></shadow></value><next><block type="motion_glideto" id="v=RBccv]?B8f]|y}iO2W"><value name="SECS"><shadow type="math_number" id="DzXXH37jePRpJ4;yU4Cn"><field name="NUM">1</field></shadow></value><value name="TO"><shadow type="motion_glideto_menu" id="o-fb#zR,vs6|NMR4f^i@"><field name="TO">_random_</field></shadow></value></block></next></block></next></block></statement></block></xml>';
+      // const serializeTest2 = '<xml xmlns="http://www.w3.org/1999/xhtml"><variables></variables><block type="looks_changeeffectby" id="y`a{GqUSC($9}#M;l^g^" x="213" y="314"><field name="EFFECT">COLOR</field><value name="CHANGE"><shadow type="math_number" id="_wP*k3G(E9]Yy3xUD)ku"><field name="NUM">10</field></shadow></value></block></xml>';
+      Blockly.Xml.clearWorkspaceAndLoadFromXml(Blockly.Xml.textToDom(bug4), workspace);
+      workspace.highlightSegment("=kMCv##@gEUX?p`Ysbo7", "w8!vhrtL:el*B}[~OL!P", true);
+      // setupPracticeSegment('Kt+Eor/{V5J!4Y#0o@ah', null);
 
-      var result2 = workspace.serializeDFS(
-      '-jqW{Pa(7Oh.3Y(Df^MN',
-        'y`a{GqUSC($9}#M;l^g^'
-      );
 
-      console.log(result2);
-      
+      // var result1 = workspace.serializeDFS(
+      //   'mcr+qHa=F%6`w2R6Vxcq',
+      //   'mcr+qHa=F%6`w2R6Vxcq'
+      // );
+
+      // console.log(result1);
+
+      // var result2 = workspace.serializeDFS(
+      // '-jqW{Pa(7Oh.3Y(Df^MN',
+      //   'y`a{GqUSC($9}#M;l^g^'
+      // );
+
+      // console.log(result2);
+
     }
 
     function setupPracticeSegment(startId, endId) {
